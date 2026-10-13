@@ -221,6 +221,37 @@ flowchart TD
 这种方式能够让 Agent 更明确地掌握任务进度，也更容易在长任务中恢复工作。
 
 ## 6. 上下文管理的整体流程
+课程总结的训练思路是：
+
+### 阶段一：短上下文预训练 `基础能力`
+先利用大量常规长度的文本学习语言和基本模式。
+
+### 阶段二：继续训练 `长度扩展`
+逐渐增加训练序列长度，学习更长距离的依赖关系。
+
+### 阶段三：长上下文适配 `任务适配`
+使用长文档、长程推理和依赖远距离证据的任务，改善实际使用能力。
+
+这里的难点不仅是计算资源，还包括训练数据：如果数据没有真正需要跨越很长的距离来完成任务，模型就未必能学会有效利用远处的信息。 `llm_learn +1`
+
+###  Long-context data examples
+
+> ### Long documents
+> **coherent natural structure**
+> 书籍、代码库、代码仓库以及多文档语料库。
+
+> ### Packed examples
+> **high token utilization**
+> 高效，但需要注意边界问题以及跨样本泄漏（cross-example leakage）。
+
+> ### Agent trajectories（agent 轨迹）
+> **actions + observations**
+> 长周期恢复（long-horizon recovery）、状态追踪（state tracking）以及工具使用（tool use）。
+
+> ### Synthetic tasks
+> **controlled dependencies**
+> 将证据（evidence）和干扰项（distractors）放置在设计好的位置。
+
 
 一个实用的上下文管理流程可以表示为：
 
@@ -241,6 +272,8 @@ flowchart TD
 ```
 
 注意：这是一种通用的 Agent 设计思路，不代表所有框架都采用完全相同的执行流程。
+
+
 
 ## 7. 如何评价上下文管理是否有效？
 
